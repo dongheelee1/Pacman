@@ -1,0 +1,57 @@
+/*All the divisions inside divisions of class row*/
+
+body{
+	background-color: black;
+	margin: 0px;
+
+}
+div#world{
+	display: inline-block;
+}
+div.row div{
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: top;
+}
+div.brick{
+	background: url('imgs/brick.jpg');
+	background-size: cover;
+
+}
+
+div.coin{
+	background: url('imgs/coin.gif');
+	background-repeat: no-repeat;
+	background-position: center; 
+
+}
+
+div#pacman{
+	background: url('imgs/pacman.gif');
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-size: cover;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+
+}
+div#ghost{
+	background: url('imgs/blue_ghost.gif');
+	background-repeat: no-repeat;
+	background-position: center; 
+	background-size: cover;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+
+}
+div.grape{
+	background: url('imgs/grape.gif');
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 20px;
+	height: 20px;
+	background-size: cover; 
+}
