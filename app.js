@@ -13,8 +13,8 @@ $(document).ready(function(){
 		[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 	]
 	var score = 0; 
-	var rotation = 0; 
 	document.getElementById('score').innerHTML = score;
+
 	var pacman = {
 		x: 1,
 		y: 1 
@@ -48,60 +48,107 @@ $(document).ready(function(){
 		}
 		document.getElementById('world').innerHTML = output;
 	}
+	displayWorld();
 
 	// function that shifts the position of Pacman 
 	function displayPacman(){
 		document.getElementById('pacman').style.top = pacman.y*20 + "px"
 		document.getElementById('pacman').style.left = pacman.x*20 + "px"
 	}
+	displayPacman();
+
 	function displayGhost(){
 		document.getElementById('ghost').style.top = ghost.y*20 + "px"
 		document.getElementById('ghost').style.left = ghost.x*20 + "px"
 	}
-	displayWorld();
-	displayPacman();
 	displayGhost();
+
+	resume = true;
+	function moveGhost(){
+		if(resume != true){
+			return;
+		}
+		choice = Math.floor(Math.random()*4)+1
+		if(choice == 1 && world[ghost.y][ghost.x+1] != 2){
+			ghost.x++;
+			displayGhost();
+		}
+		else if(choice == 2 && world[ghost.y+1][ghost.x] != 2){
+			ghost.y++;
+			displayGhost();
+
+		}
+		else if(choice == 3 && world[ghost.y][ghost.x-1] != 2){
+			ghost.x--;
+			displayGhost();
+
+		}
+		else if(choice == 4 && world[ghost.y-1][ghost.x] != 2){
+			ghost.y--;
+			displayGhost();
+		}
+
+		if(ghost.y == pacman.y && ghost.x == pacman.x){
+			alert('game over')
+			// document.getElementById('result').innerHTML = "GAME OVER"
+			// $('#result').css('border', '4px dotted red')
+			// $('#result').css('font', 'courier')
+			// $('#result').css('color', 'red')
+			$('body').append('<div id="result"><font face="courier" style="margin: 30px">GAME OVER</font></div>')
+			resume = false;
+		}else{
+			//keep calling the moveGhost function
+			window.requestAnimationFrame(moveGhost);
+		}
+	}
+	moveGhost();
 
 	//console.dir(document) --> shows properties of the document
 	document.onkeydown = function(e){
 		//for different browsers, different things are passed
-		if(e.keyCode == 37 && world[pacman.y][pacman.x-1] != 2){
-			//left
-			pacman.x--;
-			displayPacman();
-			document.getElementById('pacman').style.transform = "rotate(180deg)"
-		}
-		else if(e.keyCode == 38 && world[pacman.y-1][pacman.x] != 2){
-			//up
-			pacman.y--;
-			displayPacman();
-			document.getElementById('pacman').style.transform = "rotate(270deg)"
-		}
-		else if(e.keyCode == 39 && world[pacman.y][pacman.x+1] != 2){
-			//right
-			pacman.x++;
-			displayPacman();
-			document.getElementById('pacman').style.transform = "rotate(0deg)"
-		}
-		else if(e.keyCode == 40 && world[pacman.y+1][pacman.x] != 2){
-			//down
-			pacman.y++;
-			displayPacman();
-			document.getElementById('pacman').style.transform = "rotate(90deg)"
-		}
-		console.log(e.keyCode);
+		if(resume == true){
+			// different keydowns that affect the movement of pacman 
+			if(e.keyCode == 37 && world[pacman.y][pacman.x-1] != 2){
+				//left
+				pacman.x--;
+				displayPacman();
+				document.getElementById('pacman').style.transform = "rotate(180deg)"
+			}
+			else if(e.keyCode == 38 && world[pacman.y-1][pacman.x] != 2){
+				//up
+				pacman.y--;
+				displayPacman();
+				document.getElementById('pacman').style.transform = "rotate(270deg)"
+			}
+			else if(e.keyCode == 39 && world[pacman.y][pacman.x+1] != 2){
+				//right
+				pacman.x++;
+				displayPacman();
+				document.getElementById('pacman').style.transform = "rotate(0deg)"
+			}
+			else if(e.keyCode == 40 && world[pacman.y+1][pacman.x] != 2){
+				//down
+				pacman.y++;
+				displayPacman();
+				document.getElementById('pacman').style.transform = "rotate(90deg)"
+			}
 
-		if(world[pacman.y][pacman.x] == 1){
-			world[pacman.y][pacman.x] = 0;
-			score ++;
-			document.getElementById('score').innerHTML = score*10;
-			displayWorld();
-		}
-		if(world[pacman.y][pacman.x] == 3){
-			world[pacman.y][pacman.x] = 0;
-			score += 3;
-			document.getElementById('score').innerHTML = score*10;
-			displayWorld(); 
+			// when pacman encounters 1 (coin), set the space to empty, increase score by 10
+			if(world[pacman.y][pacman.x] == 1){
+				world[pacman.y][pacman.x] = 0;
+				score ++;
+				document.getElementById('score').innerHTML = score*10;
+				displayWorld();
+			}
+			// when pacman ecounters 3 (grape), set the space to empty, increase score by 30
+			if(world[pacman.y][pacman.x] == 3){
+				world[pacman.y][pacman.x] = 0;
+				score += 3;
+				document.getElementById('score').innerHTML = score*10;
+				displayWorld(); 
+			}
 		}
 	}
+	console.log(pacman.x)
+
 })
