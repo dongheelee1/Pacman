@@ -89,12 +89,7 @@ $(document).ready(function(){
 		}
 
 		if(ghost.y == pacman.y && ghost.x == pacman.x){
-			alert('game over')
-			// document.getElementById('result').innerHTML = "GAME OVER"
-			// $('#result').css('border', '4px dotted red')
-			// $('#result').css('font', 'courier')
-			// $('#result').css('color', 'red')
-			$('body').append('<div id="result"><font face="courier" style="margin: 30px">GAME OVER</font></div>')
+			$('body').append('<div id="result"><font face="courier" style="margin: 30px">GAME OVER</font><button type="button" onClick="window.location.reload();"><font face="courier">Restart?</font></button></div>')
 			resume = false;
 		}else{
 			//keep calling the moveGhost function
@@ -149,6 +144,5 @@ $(document).ready(function(){
 			}
 		}
 	}
-	console.log(pacman.x)
 
 })
