@@ -93,7 +93,8 @@ $(document).ready(function(){
 			resume = false;
 		}else{
 			//keep calling the moveGhost function
-			window.requestAnimationFrame(moveGhost);
+			setTimeout(moveGhost, 100)
+			
 		}
 	}
 	moveGhost();
